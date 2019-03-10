@@ -65,6 +65,38 @@ const speak = () =>{
        // Get speak text
 
        const speakText = new SpeechSynthesisUtterance(textInput.value);
-   }
 
-}
+    // Speak end
+    
+    speakText.onend = e =>{
+        console.log('Done speaking...');
+    }
+
+    //Speake rror
+    speakText.onerror=e=>{
+        console.error('Something went wrong');
+    }
+
+
+    //Selected voice
+
+    const SelectedVoice = voiceSelect.selectedOptions[0]
+    .getAttribute('data-name');
+
+    // Loop through voices
+
+    voices.forEach(voice =>{
+       if(voice.name === selectedVoice){
+           speakText.voice = voice;
+       }
+    })
+
+    // Set pitch
+    speakText.rate = rate.value;
+    speakText.pitch = pitch.value;
+
+    //Speak
+
+    synth.speak(speakText);
+   }
+};
